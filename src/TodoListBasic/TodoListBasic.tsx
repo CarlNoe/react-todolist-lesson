@@ -8,17 +8,15 @@ const TodoListBasic = () => {
   const [inProgress, setInProgress] = useState<string[]>([""]);
   const [done, setDone] = useState<string[]>([""]);
 
-  //   todo: fix any
-  const handleOnChangeText = (event: any) => {
-    setTextFieldValue(event.target.value);
+  const handleOnChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextFieldValue(e.target.value);
   };
 
-  const handleOnChangeSelect = (e: any) => {
+  const handleOnChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentCategory(e.target.value);
   };
 
-  //   todo: fix any
-  const handleOnSubmit = (e: any) => {
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (currentCategory === "todos") {
@@ -28,6 +26,13 @@ const TodoListBasic = () => {
     } else if (currentCategory === "done") {
       setDone([...done, textFieldValue]);
     }
+  };
+
+  const generateRandomKey = () => {
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
   };
 
   return (
@@ -56,7 +61,7 @@ const TodoListBasic = () => {
           <h2 style={{ margin: "16px 0 16px 0" }}>Todo:</h2>
           <div className="task-list">
             {todos.map((todo) => (
-              <p>{todo}</p>
+              <p key={generateRandomKey()}>{todo}</p>
             ))}
           </div>
         </li>
@@ -65,7 +70,7 @@ const TodoListBasic = () => {
           <h2 style={{ margin: "16px 0 16px 0" }}>In Progress::</h2>
           <div className="task-list">
             {inProgress.map((inProgressTask) => (
-              <p>{inProgressTask}</p>
+              <p key={generateRandomKey()}>{inProgressTask}</p>
             ))}
           </div>
         </li>
@@ -74,7 +79,7 @@ const TodoListBasic = () => {
           <h2 style={{ margin: "16px 0 16px 0" }}>Done:</h2>
           <div className="task-list">
             {done.map((doneTask) => (
-              <p>{doneTask}</p>
+              <p key={generateRandomKey()}>{doneTask}</p>
             ))}
           </div>
         </li>
