@@ -1,3 +1,11 @@
+/*
+
+  NOTE: Il y a pas mal de duplication au niveau des modals, je pense que 1 aurait pu suffire, 
+  mais j'ai vu que vous aviez fait 2 fichiers dans votre exemple, 
+  donc j'ai essayer de faire quelque chose qui pourrait s'en approcher.
+
+*/
+
 import { useState } from "react";
 import { notification } from "antd";
 import Column from "./Column/Column";
@@ -25,13 +33,13 @@ const TodoListBasic = () => {
 
   const [columnList, setColumnList] = useState<ColumnData[]>([]);
 
-  const [isItemModalOpen, setisItemModalOpen] = useState<boolean>(false);
+  const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
   const [currentModalItem, setCurrentModalItem] = useState<Item>({
     id: "",
     name: "",
   });
 
-  const [isColumnModalOpen, setisColumnModalOpen] = useState<boolean>(false);
+  const [isColumnModalOpen, setIsColumnModalOpen] = useState<boolean>(false);
   const [currentModalColumn, setCurrentModalColumn] = useState<ColumnData>({
     id: "",
     name: "",
@@ -80,12 +88,12 @@ const TodoListBasic = () => {
   };
 
   const openItemModal = (item: Item) => {
-    setisItemModalOpen(true);
+    setIsItemModalOpen(true);
     setCurrentModalItem(item);
   };
 
   const closeItemModal = () => {
-    setisItemModalOpen(false);
+    setIsItemModalOpen(false);
   };
 
   const editItemName = (item: Item) => {
@@ -109,12 +117,12 @@ const TodoListBasic = () => {
   };
 
   const openColumnModal = (column: ColumnData) => {
-    setisColumnModalOpen(true);
+    setIsColumnModalOpen(true);
     setCurrentModalColumn(column);
   };
 
   const closeColumnModal = () => {
-    setisColumnModalOpen(false);
+    setIsColumnModalOpen(false);
   };
 
   const editColumnName = (column: ColumnData) => {
