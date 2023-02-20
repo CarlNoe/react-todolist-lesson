@@ -1,20 +1,17 @@
 import { Input, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { Column, Item } from "../TodoListRedux";
+import { Item } from "../TodoListRedux";
+import { useDispatch, useSelector } from "react-redux";
+import { closeItem, saveItem } from "../reduxTodoSlice";
 
 interface ItemModalInterface {
   item: Item | undefined;
-  columns: Column[];
-  onCloseItem(): void;
-  onSaveItem(newItem: Item): void;
 }
 
-const ItemModal = ({
-  item,
-  onCloseItem,
-  onSaveItem,
-  columns,
-}: ItemModalInterface) => {
+const ItemModal = ({ item }: ItemModalInterface) => {
+  const dispatch = useDispatch();
+  const columns = useSelector((state: any) => state.reduxTodo.columns);
+  
   const [newItemName, setNewItemName] = useState<string>();
   const [newItemColumn, setNewItemColumn] = useState<string>();
 
@@ -24,12 +21,10 @@ const ItemModal = ({
   }, [item]);
 
   const handleOnSave = () => {
-    if (newItemName && item && newItemColumn) {
-      onSaveItem({
-        ...item,
-        label: newItemName,
-        columnId: newItemColumn,
-      });
+    if (newItemName && newItemColumn && item) {
+      dispatch(
+        saveItem({ id: item?.id, label: newItemName, columnId: newItemColumn })
+      );
     }
   };
 
@@ -47,7 +42,7 @@ const ItemModal = ({
       open={item !== undefined}
       onOk={handleOnSave}
       okText="Save"
-      onCancel={onCloseItem}
+      onCancel={() => dispatch(closeItem())}
       className="todo-list-edit-item-modal"
     >
       <Input value={newItemName} onChange={handleOnChange} />

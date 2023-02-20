@@ -1,4 +1,3 @@
-import React from "react";
 import { List } from "antd";
 import { Item } from "../TodoListRedux";
 import ItemComp from "./Item";
@@ -8,40 +7,17 @@ interface ColumnInterface {
   value: string;
   label: string;
   columnItems: Item[];
-  onDeleteItem(id: string): void;
-  onEditItem(id: string): void;
-  onEditColumn(id: string): void;
-  onDeleteColumn(id: string): void;
 }
 
-const Column = ({
-  value,
-  label,
-  columnItems,
-  onDeleteItem,
-  onEditItem,
-  onEditColumn,
-  onDeleteColumn,
-}: ColumnInterface) => {
+const Column = ({ value, label, columnItems }: ColumnInterface) => {
   return (
     <List
       className="todo-list-edit-column"
       key={value}
-      header={
-        <Header
-          label={label}
-          onEditColumn={() => onEditColumn(value)}
-          onDeleteColumn={() => onDeleteColumn(value)}
-        />
-      }
+      header={<Header label={label} value={value} />}
       dataSource={columnItems}
       renderItem={({ label: itemLabel, id }) => (
-        <ItemComp
-          label={itemLabel}
-          id={id}
-          onDeleteItem={() => onDeleteItem(id)}
-          onEditItem={() => onEditItem(id)}
-        />
+        <ItemComp label={itemLabel} id={id} />
       )}
     />
   );
